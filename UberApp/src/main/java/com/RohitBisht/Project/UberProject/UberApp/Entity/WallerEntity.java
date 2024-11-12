@@ -16,7 +16,7 @@ public class WallerEntity {
 
     private Double balance;
 
-    @OneToMany(mappedBy = "Wallet", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "wallet", fetch = FetchType.LAZY)
     private List<WalletTransactionEntity> transactions;
 
 }

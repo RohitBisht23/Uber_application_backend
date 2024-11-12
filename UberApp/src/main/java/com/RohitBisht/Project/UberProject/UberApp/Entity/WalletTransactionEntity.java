@@ -29,5 +29,5 @@ public class WalletTransactionEntity {
     private LocalDateTime timeStamp;
 
     @ManyToOne
-    private WallerEntity waller;
+    private WallerEntity wallet;
 }

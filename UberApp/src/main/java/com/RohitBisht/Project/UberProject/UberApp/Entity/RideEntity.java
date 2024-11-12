@@ -37,6 +37,8 @@ public class RideEntity {
     @Enumerated(EnumType.STRING)
     private RideStatus rideStatus;
 
+    private String opt;
+
     private Double fare;
 
     private LocalDateTime startAt;
