@@ -2,6 +2,8 @@ package com.RohitBisht.Project.UberProject.UberApp.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class WallerEntity {
 
@@ -13,5 +15,8 @@ public class WallerEntity {
     private UserEntity user;
 
     private Double balance;
+
+    @OneToMany(mappedBy = "Wallet", fetch = FetchType.LAZY)
+    private List<WalletTransactionEntity> transactions;
 
 }
