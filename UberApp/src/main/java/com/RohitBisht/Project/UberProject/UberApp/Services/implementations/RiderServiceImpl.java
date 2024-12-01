@@ -4,16 +4,22 @@ import com.RohitBisht.Project.UberProject.UberApp.DTO.DriverDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideRequestDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RiderDTO;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequestEntity;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RiderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.modelmapper.ModelMapper;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RiderServiceImpl implements RiderService {
+
+    private final ModelMapper modelMapper;
     @Override
-    public RideRequestDTO requestRide(Long rideId) {
-        return null;
+    public RideRequestDTO requestRide(RideRequestDTO rideRequestDTO) {
+
+        RideRequestEntity rideRequest = modelMapper.map(rideRequestDTO, RideRequestEntity.class);
     }
 
     @Override

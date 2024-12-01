@@ -2,15 +2,10 @@ package com.RohitBisht.Project.UberProject.UberApp.Entity;
 
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.Roles;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Set;
 
 @Entity
 @Table(name="app-user")
-@Getter
-@Setter
 public class UserEntity {
 
     @Id

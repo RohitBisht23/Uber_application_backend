@@ -33,6 +33,8 @@ public class RideDTO {
 
     private RideStatus rideStatus;
 
+    private String otp;
+
     private Double fare;
 
     private LocalDateTime startAt;

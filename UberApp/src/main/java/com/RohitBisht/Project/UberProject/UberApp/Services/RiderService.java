@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface RiderService {
 
-    RideRequestDTO requestRide(Long rideId);
+    RideRequestDTO requestRide(RideRequestDTO rideRequestDTO);
 
     RideDTO cancelRide(Long rideId);
 
