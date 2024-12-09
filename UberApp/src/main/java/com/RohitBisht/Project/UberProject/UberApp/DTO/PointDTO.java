@@ -8,4 +8,6 @@ public class PointDTO {
     private double []coordinates;
 
     private String type = "Point";
+
+
 }

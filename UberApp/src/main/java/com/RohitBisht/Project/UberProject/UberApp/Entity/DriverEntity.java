@@ -1,6 +1,7 @@
 package com.RohitBisht.Project.UberProject.UberApp.Entity;
 
 import jakarta.persistence.*;
+import org.locationtech.jts.geom.Point;
 
 @Entity
 public class DriverEntity {
@@ -15,5 +16,5 @@ public class DriverEntity {
     private Double rating;
 
     @Column(columnDefinition="Geometry(Point, 4326)")
-    Point currentLocation;
+    private Point currentLocation;
 }
