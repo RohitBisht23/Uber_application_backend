@@ -6,6 +6,7 @@ import com.RohitBisht.Project.UberProject.UberApp.DTO.RideRequestDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RiderDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequestEntity;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RiderService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.List;
 public class RiderServiceImpl implements RiderService {
 
     private final ModelMapper modelMapper;
+
     @Override
     public RideRequestDTO requestRide(RideRequestDTO rideRequestDTO) {
 
