@@ -5,7 +5,7 @@ import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DistanceServiceImpl implements DistanceService {
+public class DistanceServiceOSRMImpl implements DistanceService {
     @Override
     public double calculateDistance(Point src, Point dest) {
     //TODO    //Call the third party api call OSMR to fetch the distance

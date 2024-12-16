@@ -12,7 +12,7 @@ import java.util.List;
 public class DriverMatchingNearestHighestRatedDriverStrategy implements DriverMatchingStrategy {
 
     @Override
-    public List<DriverEntity> findMatchingDriver(RideRequestEntity rideRequestDTO) {
+    public List<DriverEntity> findMatchingDrivers(RideRequestEntity rideRequestDTO) {
         return List.of();
     }
 }
