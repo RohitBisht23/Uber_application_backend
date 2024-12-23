@@ -18,6 +18,6 @@ public interface DriverRepository extends JpaRepository<DriverEntity, Long> {
             "ORDER BY distance "+
             "LIMIT 10"
     )
-    List<DriverEntity> findMatchingDrivers(Point pickUpLocation);
+    List<DriverEntity> findTenNearestDrivers(Point pickUpLocation);
 
 }

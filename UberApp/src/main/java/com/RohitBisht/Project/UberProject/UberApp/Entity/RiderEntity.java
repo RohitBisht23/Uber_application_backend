@@ -1,8 +1,13 @@
 package com.RohitBisht.Project.UberProject.UberApp.Entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
 public class RiderEntity {
 
     @Id

@@ -2,9 +2,12 @@ package com.RohitBisht.Project.UberProject.UberApp.Entity;
 
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.Roles;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.Set;
 
 @Entity
+@Data
 @Table(name="app-user")
 public class UserEntity {
 
@@ -23,4 +26,5 @@ public class UserEntity {
     @ElementCollection(fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
+
 }

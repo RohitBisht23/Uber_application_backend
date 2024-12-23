@@ -6,7 +6,10 @@ import com.RohitBisht.Project.UberProject.UberApp.DTO.RideRequestDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RiderDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequestEntity;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.RiderEntity;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.UserEntity;
 import com.RohitBisht.Project.UberProject.UberApp.Repository.RideRequestRepository;
+import com.RohitBisht.Project.UberProject.UberApp.Repository.RiderRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RiderService;
 import com.RohitBisht.Project.UberProject.UberApp.Strategies.DriverMatchingStrategy;
 import com.RohitBisht.Project.UberProject.UberApp.Strategies.RideFareCalculationStrategy;
@@ -26,6 +29,7 @@ public class RiderServiceImpl implements RiderService {
     private final RideFareCalculationStrategy rideFareCalculationStrategy;
     private  final DriverMatchingStrategy driverMatchingStrategy;
     private final RideRequestRepository rideRequestRepository;
+    public final RiderRepository riderRepository;
 
     @Override
     public RideRequestDTO requestRide(RideRequestDTO rideRequestDTO) {
@@ -63,5 +67,16 @@ public class RiderServiceImpl implements RiderService {
     @Override
     public List<RideDTO> getAllMyRides() {
         return List.of();
+    }
+
+    @Override
+    RiderEntity createNewRider(UserEntity user) {
+        RiderEntity newRider = RiderEntity.builder()
+                .user(user)
+                .rating(0.0)
+                .build();
+        riderRepository.save(newRider);
+
+        return newRider;
     }
 }
