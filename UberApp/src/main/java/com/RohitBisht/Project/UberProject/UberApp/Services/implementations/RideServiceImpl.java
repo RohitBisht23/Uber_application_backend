@@ -1,7 +1,7 @@
 package com.RohitBisht.Project.UberProject.UberApp.Services.implementations;
 
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideRequestDTO;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.DriverEntity;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideEntity;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RideService;
@@ -23,7 +23,7 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-    public RideEntity createNewRide(RideRequestDTO rideRequestDTO, DriverEntity driver) {
+    public RideEntity createNewRide(RideRequestDTO rideRequestDTO, Driver driver) {
         return null;
     }
 

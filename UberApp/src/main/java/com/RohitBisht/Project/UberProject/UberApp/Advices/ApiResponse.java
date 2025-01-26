@@ -2,9 +2,11 @@ package com.RohitBisht.Project.UberProject.UberApp.Advices;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Data
 public class ApiResponse<T> {
     @JsonFormat(pattern = "hh:mm:ss dd:MM:yyyy")

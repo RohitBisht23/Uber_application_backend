@@ -4,9 +4,8 @@ import com.RohitBisht.Project.UberProject.UberApp.DTO.DriverDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideRequestDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RiderDTO;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.RiderEntity;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.UserEntity;
-import org.springframework.stereotype.Service;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Rider;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.User;
 
 import java.util.List;
 
@@ -23,5 +22,5 @@ public interface RiderService {
 
     List<RideDTO> getAllMyRides();
 
-    RiderEntity createNewRider(UserEntity user);
+    Rider createNewRider(User user);
 }

@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<?>> handleRuntimeConflictException(ResourceNotFoundException exception) {
         ApiError apiError = ApiError.builder()
                 .message(exception.getMessage())
-                .status(HttpStatus.NOT_FOUND)
+                .status(HttpStatus.CONFLICT)
                 .build();
 
         return buildErrorResponse(apiError);

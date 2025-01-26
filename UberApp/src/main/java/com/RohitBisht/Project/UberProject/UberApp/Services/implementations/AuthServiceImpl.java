@@ -4,8 +4,8 @@ import com.RohitBisht.Project.UberProject.UberApp.DTO.DriverDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.SignUpDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.UserDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.Roles;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.RiderEntity;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.UserEntity;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Rider;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.User;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.RuntimeConflictException;
 import com.RohitBisht.Project.UberProject.UberApp.Repository.UserRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Services.AuthService;
@@ -31,16 +31,15 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserDTO signUp(SignUpDTO signUpDTO) {
+        User user = userRepository.findByEmail(signUpDTO.getEmail()).orElseThrow(() ->new RuntimeConflictException("User already exist with email :"+signUpDTO.getEmail()));
 
-        UserEntity user = userRepository.findByEmail(signUpDTO.getEmail()).orElseThrow(() ->new RuntimeConflictException("User already exist with email :"+signUpDTO.getEmail());
-
-        UserEntity newUser = modelMapper.map(signUpDTO, UserEntity.class);
+        User newUser = modelMapper.map(signUpDTO, User.class);
         newUser.setRoles(Set.of(Roles.RIDER));
 
-        UserEntity savedUser = userRepository.save(newUser);
+        User savedUser = userRepository.save(newUser);
 
         //Creating user related entities
-        RiderEntity rider = riderService.createNewRider(savedUser);
+        Rider rider = riderService.createNewRider(savedUser);
 
         //TODO add wallet related service here
 

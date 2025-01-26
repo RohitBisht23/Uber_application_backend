@@ -1,9 +1,7 @@
 package com.RohitBisht.Project.UberProject.UberApp.DTO;
 
-import com.RohitBisht.Project.UberProject.UberApp.Entity.DriverEntity;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.PaymentMethod;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.RiderEntity;
 import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;

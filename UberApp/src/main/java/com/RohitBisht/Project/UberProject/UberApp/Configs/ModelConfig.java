@@ -29,8 +29,8 @@ public class ModelConfig {
                     Point point = context.getSource();
 
                     double coordinates[] = {
-                          point.getX(),
-                          point.getY(),
+                          point.getX(), //longitude
+                          point.getY(), //latitude
                     };
 
                     return new PointDTO(coordinates);

@@ -5,15 +5,14 @@ import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideRequestDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RiderDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequestEntity;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.RiderEntity;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.UserEntity;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Rider;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.User;
 import com.RohitBisht.Project.UberProject.UberApp.Repository.RideRequestRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Repository.RiderRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RiderService;
 import com.RohitBisht.Project.UberProject.UberApp.Strategies.DriverMatchingStrategy;
 import com.RohitBisht.Project.UberProject.UberApp.Strategies.RideFareCalculationStrategy;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,14 +33,15 @@ public class RiderServiceImpl implements RiderService {
     @Override
     public RideRequestDTO requestRide(RideRequestDTO rideRequestDTO) {
 
-        RideRequestEntity rideRequest = modelMapper.map(rideRequestDTO, RideRequestEntity.class);
+        RideRequest rideRequest = modelMapper.map(rideRequestDTO, RideRequest.class);
         rideRequest.setRideRequestStatus(RideRequestStatus.PENDING);
+
         //Calculating fare
         Double fare = rideFareCalculationStrategy.CalculateFare(rideRequest);
 
         rideRequest.setFare(fare);
 
-        RideRequestEntity savedRideRequest = rideRequestRepository.save(rideRequest);
+        RideRequest savedRideRequest = rideRequestRepository.save(rideRequest);
 
         //Matching Drivers
         driverMatchingStrategy.findMatchingDrivers(rideRequest);
@@ -70,8 +70,8 @@ public class RiderServiceImpl implements RiderService {
     }
 
     @Override
-    RiderEntity createNewRider(UserEntity user) {
-        RiderEntity newRider = RiderEntity.builder()
+    Rider createNewRider(User user) {
+        Rider newRider = Rider.builder()
                 .user(user)
                 .rating(0.0)
                 .build();

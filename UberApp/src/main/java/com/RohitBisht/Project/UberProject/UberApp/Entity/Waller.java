@@ -5,18 +5,18 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class WallerEntity {
+public class Waller {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private UserEntity user;
+    private User user;
 
     private Double balance;
 
     @OneToMany(mappedBy = "wallet", fetch = FetchType.LAZY)
-    private List<WalletTransactionEntity> transactions;
+    private List<WalletTransaction> transactions;
 
 }

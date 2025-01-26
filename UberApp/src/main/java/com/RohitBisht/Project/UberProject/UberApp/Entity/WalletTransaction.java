@@ -8,7 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-public class WalletTransactionEntity {
+public class WalletTransaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +29,5 @@ public class WalletTransactionEntity {
     private LocalDateTime timeStamp;
 
     @ManyToOne
-    private WallerEntity wallet;
+    private Waller wallet;
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RiderController {
 
-
     private final RiderService riderService;
 
     @PostMapping("/requestRide")
