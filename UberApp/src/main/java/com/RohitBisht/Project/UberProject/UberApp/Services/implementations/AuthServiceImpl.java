@@ -31,12 +31,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserDTO signUp(SignUpDTO signUpDTO) {
-        User user = userRepository.findByEmail(signUpDTO.getEmail()).orElseThrow(() ->new RuntimeConflictException("User already exist with email :"+signUpDTO.getEmail()));
+        //Checking if user already exists or not
+        User user = userRepository.findByEmail(signUpDTO.getEmail()).orElse(null);
+        if(user != null) {
+             throw new RuntimeConflictException("User already exist with email :"+signUpDTO.getEmail());
+        }
 
-        User newUser = modelMapper.map(signUpDTO, User.class);
-        newUser.setRoles(Set.of(Roles.RIDER));
+        User mappedUser = modelMapper.map(signUpDTO, User.class);
+        mappedUser.setRoles(Set.of(Roles.RIDER));
 
-        User savedUser = userRepository.save(newUser);
+        User savedUser = userRepository.save(mappedUser);
 
         //Creating user related entities
         Rider rider = riderService.createNewRider(savedUser);

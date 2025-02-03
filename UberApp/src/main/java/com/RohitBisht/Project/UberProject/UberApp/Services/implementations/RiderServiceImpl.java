@@ -70,7 +70,7 @@ public class RiderServiceImpl implements RiderService {
     }
 
     @Override
-    Rider createNewRider(User user) {
+    public Rider createNewRider(User user) {
         Rider newRider = Rider.builder()
                 .user(user)
                 .rating(0.0)
