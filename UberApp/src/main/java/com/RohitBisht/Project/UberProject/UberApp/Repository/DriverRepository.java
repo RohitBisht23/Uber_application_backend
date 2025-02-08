@@ -19,4 +19,16 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     )
     List<Driver> findTenNearestDrivers(Point pickUpLocation);
 
+
+
+    @Query(
+            value = "SELECT d.* " +
+                    "FROM drivers d " +
+                    "WHERE d.available = true " +
+                    "AND ST_dWithin(d.current_location, :pickUpLocation, 15000) " +
+                    "ORDER BY d.rating DESC " +
+                    "LIMIT 10",nativeQuery = true
+    )
+    List<Driver> findNearbyTopRatedDrivers(Point pickUpLocation);
+
 }

@@ -13,6 +13,7 @@ import com.RohitBisht.Project.UberProject.UberApp.Services.RiderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional //-> The whole below function either execute successfully or failed successfully. No partial operation will be done
     public UserDTO signUp(SignUpDTO signUpDTO) {
         //Checking if user already exists or not
         User user = userRepository.findByEmail(signUpDTO.getEmail()).orElse(null);
