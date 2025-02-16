@@ -2,13 +2,13 @@ package com.RohitBisht.Project.UberProject.UberApp.Services;
 
 import com.RohitBisht.Project.UberProject.UberApp.DTO.DriverDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
-import com.RohitBisht.Project.UberProject.UberApp.DTO.RiderDTO;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 
 import java.util.List;
 
 public interface DriverService {
 
-    RideDTO acceptRide(Long rideId);
+    RideDTO acceptRide(Long rideRequestId);
 
     RideDTO cancelRide(Long rideId);
 
@@ -21,4 +21,6 @@ public interface DriverService {
     DriverDTO getMyProfile();
 
     List<RideDTO> getAllMyRides();
+
+    Driver getCurrentDriver();
 }

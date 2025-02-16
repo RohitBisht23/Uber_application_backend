@@ -2,16 +2,39 @@ package com.RohitBisht.Project.UberProject.UberApp.Services.implementations;
 
 import com.RohitBisht.Project.UberProject.UberApp.DTO.DriverDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
+import com.RohitBisht.Project.UberProject.UberApp.Exceptions.ResourceNotFoundException;
+import com.RohitBisht.Project.UberProject.UberApp.Repository.DriverRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Services.DriverService;
+import com.RohitBisht.Project.UberProject.UberApp.Services.RideRequestService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DriverServiceImpl implements DriverService {
+
+    private final RideRequestService rideRequestService;
+    private final DriverRepository driverRepository;
+
     @Override
-    public RideDTO acceptRide(Long rideId) {
-        return null;
+    @Transactional
+    public RideDTO acceptRide(Long rideRequestId) {
+        //Get the ride to check if it is accepted
+        RideRequest rideRequest = rideRequestService.findRideRequestById(rideRequestId);
+
+        if(!rideRequest.getRideRequestStatus().equals(RideRequestStatus.PENDING)) {
+            throw new RuntimeException("RideRequest cannot be accepted, status is "+rideRequest.getRideRequestStatus());
+        }
+
+        Driver currentDriver = getCurrentDriver();
+
+        rideRequest.setRideRequestStatus(RideRequestStatus.CONFIRMED);
     }
 
     @Override
@@ -42,5 +65,10 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public List<RideDTO> getAllMyRides() {
         return List.of();
+    }
+
+    @Override
+    public Driver getCurrentDriver() {
+        return driverRepository.findById(2L).orElseThrow(() -> new ResourceNotFoundException("Driver not found with id :"+2));
     }
 }
