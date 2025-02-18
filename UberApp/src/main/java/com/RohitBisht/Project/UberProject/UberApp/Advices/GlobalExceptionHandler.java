@@ -1,5 +1,6 @@
 package com.RohitBisht.Project.UberProject.UberApp.Advices;
 
+import com.RohitBisht.Project.UberProject.UberApp.Exceptions.DriverNotAvailableException;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.ResourceNotFoundException;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.RuntimeConflictException;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
@@ -28,6 +29,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeConflictException.class)
     public ResponseEntity<ApiResponse<?>> handleRuntimeConflictException(ResourceNotFoundException exception) {
+        ApiError apiError = ApiError.builder()
+                .message(exception.getMessage())
+                .status(HttpStatus.CONFLICT)
+                .build();
+
+        return buildErrorResponse(apiError);
+    }
+
+    //Driver not available exception
+    @ExceptionHandler(DriverNotAvailableException.class)
+    public ResponseEntity<ApiResponse<?>> handleDriverNotAvailableException(DriverNotAvailableException exception) {
         ApiError apiError = ApiError.builder()
                 .message(exception.getMessage())
                 .status(HttpStatus.CONFLICT)

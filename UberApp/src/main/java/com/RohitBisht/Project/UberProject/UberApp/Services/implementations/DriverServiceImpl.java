@@ -5,10 +5,12 @@ import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
+import com.RohitBisht.Project.UberProject.UberApp.Exceptions.DriverNotAvailableException;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.ResourceNotFoundException;
 import com.RohitBisht.Project.UberProject.UberApp.Repository.DriverRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Services.DriverService;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RideRequestService;
+import com.RohitBisht.Project.UberProject.UberApp.Services.RideService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ public class DriverServiceImpl implements DriverService {
 
     private final RideRequestService rideRequestService;
     private final DriverRepository driverRepository;
+    private final RideService rideService;
 
     @Override
     @Transactional
@@ -34,7 +37,13 @@ public class DriverServiceImpl implements DriverService {
 
         Driver currentDriver = getCurrentDriver();
 
-        rideRequest.setRideRequestStatus(RideRequestStatus.CONFIRMED);
+        //Check if driver itself available or not
+        if(!currentDriver.getAvailable()) {
+            throw new DriverNotAvailableException("Driver cannot accept ride due to unavailability.");
+        }
+
+        //Create new Ride
+        rideService.createNewRide(rideRequest, currentDriver);
     }
 
     @Override
