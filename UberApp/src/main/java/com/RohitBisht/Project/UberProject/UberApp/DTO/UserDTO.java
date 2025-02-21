@@ -1,7 +1,10 @@
 package com.RohitBisht.Project.UberProject.UberApp.DTO;
 
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.Roles;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 

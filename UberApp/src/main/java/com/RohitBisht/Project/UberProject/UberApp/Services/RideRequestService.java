@@ -5,4 +5,7 @@ import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
 public interface RideRequestService {
 
     RideRequest findRideRequestById(Long rideRequestId);
+
+
+    void update(RideRequest rideRequest);
 }

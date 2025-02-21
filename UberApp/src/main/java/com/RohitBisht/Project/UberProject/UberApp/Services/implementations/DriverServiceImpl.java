@@ -4,6 +4,7 @@ import com.RohitBisht.Project.UberProject.UberApp.DTO.DriverDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.RideEntity;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.DriverNotAvailableException;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.ResourceNotFoundException;
@@ -12,6 +13,7 @@ import com.RohitBisht.Project.UberProject.UberApp.Services.DriverService;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RideRequestService;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RideService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,7 @@ public class DriverServiceImpl implements DriverService {
     private final RideRequestService rideRequestService;
     private final DriverRepository driverRepository;
     private final RideService rideService;
+    private final ModelMapper modelMapper;
 
     @Override
     @Transactional
@@ -43,7 +46,8 @@ public class DriverServiceImpl implements DriverService {
         }
 
         //Create new Ride
-        rideService.createNewRide(rideRequest, currentDriver);
+        RideEntity ride =  rideService.createNewRide(rideRequest, currentDriver);
+        return modelMapper.map(ride, RideDTO.class);
     }
 
     @Override

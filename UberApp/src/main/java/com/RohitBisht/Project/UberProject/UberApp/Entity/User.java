@@ -2,7 +2,7 @@ package com.RohitBisht.Project.UberProject.UberApp.Entity;
 
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.Roles;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 import java.util.Set;
 

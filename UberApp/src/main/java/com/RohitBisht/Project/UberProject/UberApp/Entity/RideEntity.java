@@ -3,12 +3,20 @@ package com.RohitBisht.Project.UberProject.UberApp.Entity;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.PaymentMethod;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RideEntity {
 
     @Id
@@ -36,7 +44,7 @@ public class RideEntity {
     @Enumerated(EnumType.STRING)
     private RideStatus rideStatus;
 
-    private String opt;
+    private String otp;
 
     private Double fare;
 

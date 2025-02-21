@@ -13,13 +13,11 @@ import com.RohitBisht.Project.UberProject.UberApp.Exceptions.ResourceNotFoundExc
 import com.RohitBisht.Project.UberProject.UberApp.Repository.RideRequestRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Repository.RiderRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RiderService;
-import com.RohitBisht.Project.UberProject.UberApp.Strategies.DriverMatchingStrategy;
-import com.RohitBisht.Project.UberProject.UberApp.Strategies.RideFareCalculationStrategy;
 import com.RohitBisht.Project.UberProject.UberApp.Strategies.RideStrategyManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

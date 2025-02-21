@@ -3,7 +3,6 @@ package com.RohitBisht.Project.UberProject.UberApp.Advices;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.DriverNotAvailableException;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.ResourceNotFoundException;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.RuntimeConflictException;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

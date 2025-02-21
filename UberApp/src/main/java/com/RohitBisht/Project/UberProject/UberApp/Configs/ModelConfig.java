@@ -3,9 +3,9 @@ package com.RohitBisht.Project.UberProject.UberApp.Configs;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.PointDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Utils.GeometryUtil;
 import org.locationtech.jts.geom.Point;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.modelmapper.ModelMapper;
 
 @Configuration  // Add this annotation
 public class ModelConfig {
