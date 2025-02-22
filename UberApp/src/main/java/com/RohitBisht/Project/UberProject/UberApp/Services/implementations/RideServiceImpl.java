@@ -4,9 +4,9 @@ import com.RohitBisht.Project.UberProject.UberApp.DTO.RideRequestDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.Ride;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideEntity;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
+import com.RohitBisht.Project.UberProject.UberApp.Exceptions.ResourceNotFoundException;
 import com.RohitBisht.Project.UberProject.UberApp.Repository.RideRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RideRequestService;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RideService;
@@ -28,7 +28,9 @@ public class RideServiceImpl implements RideService {
 
     @Override
     public RideEntity getRiderById(Long rideID) {
-        return null;
+        RideEntity ride = rideRepository.findById(rideID)
+                .orElseThrow(()-> new ResourceNotFoundException("Ride does not exist with id :"+rideID));
+        return ride;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class RideServiceImpl implements RideService {
     public RideEntity createNewRide(RideRequest rideRequest, Driver driver) {
         rideRequest.setRideRequestStatus(RideRequestStatus.CONFIRMED);
 
-        RideEntity ride = modelMapper.map(rideRequest, Ride.class);
+        RideEntity ride = modelMapper.map(rideRequest, RideEntity.class);
         ride.setRideStatus(RideStatus.CONFIRMED);
         ride.setDriver(driver);
         ride.setOtp(generateRandomORP());
@@ -51,8 +53,10 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-    public RideEntity updateRideStatus(Long rideId, RideStatus rideStatus) {
-        return null;
+    public RideEntity updateRideStatus(RideEntity ride, RideStatus rideStatus) {
+        ride.setRideStatus(rideStatus);
+        RideEntity savedRide = rideRepository.save(ride);
+        return savedRide;
     }
 
     @Override

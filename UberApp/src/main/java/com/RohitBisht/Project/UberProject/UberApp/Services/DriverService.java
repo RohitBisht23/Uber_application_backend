@@ -2,6 +2,7 @@ package com.RohitBisht.Project.UberProject.UberApp.Services;
 
 import com.RohitBisht.Project.UberProject.UberApp.DTO.DriverDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
+import com.RohitBisht.Project.UberProject.UberApp.DTO.RideStartDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface DriverService {
 
     RideDTO cancelRide(Long rideId);
 
-    RideDTO startRide(Long rideId);
+    RideDTO startRide(Long rideId, String OTP);
 
     RideDTO endRide(Long rideId);
 

@@ -2,8 +2,10 @@ package com.RohitBisht.Project.UberProject.UberApp.Services.implementations;
 
 import com.RohitBisht.Project.UberProject.UberApp.DTO.DriverDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
+import com.RohitBisht.Project.UberProject.UberApp.DTO.RideStartDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideEntity;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.DriverNotAvailableException;
@@ -17,6 +19,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.AccessDeniedException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -45,8 +49,12 @@ public class DriverServiceImpl implements DriverService {
             throw new DriverNotAvailableException("Driver cannot accept ride due to unavailability.");
         }
 
+        //Mark driver as unavailable
+        currentDriver.setAvailable(false);
+        Driver savedDriver = driverRepository.save(currentDriver);
+
         //Create new Ride
-        RideEntity ride =  rideService.createNewRide(rideRequest, currentDriver);
+        RideEntity ride =  rideService.createNewRide(rideRequest, savedDriver);
         return modelMapper.map(ride, RideDTO.class);
     }
 
@@ -56,8 +64,29 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public RideDTO startRide(Long rideId) {
-        return null;
+    public RideDTO startRide(Long rideId, String OTP) {
+        //Get the ride
+        RideEntity ride = rideService.getRiderById(rideId);
+
+        //Check if this driver own this ride then only start the ride
+        Driver driver = getCurrentDriver();
+
+        if(!driver.equals(ride.getDriver())) {
+            throw new RuntimeException("Driver cannot start ride as he has not accepted earlier");
+        }
+
+        //Check status
+        if(!ride.getRideStatus().equals(RideStatus.CONFIRMED)) {
+            throw new RuntimeException("Ride status is not confirmed hence cannot be started, status :"+ride.getRideStatus());
+        }
+
+        //check otp
+        if(!OTP.equals(ride.getOtp())) {
+            throw  new RuntimeException("OTP is not valid. OTP : "+OTP);
+        }
+        ride.setStartAt(LocalDateTime.now());  //set started ride time
+        RideEntity savedRide = rideService.updateRideStatus(ride, RideStatus.ONGOING);
+        return modelMapper.map(savedRide, RideDTO.class);
     }
 
     @Override

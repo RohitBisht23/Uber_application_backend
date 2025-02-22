@@ -2,19 +2,21 @@ package com.RohitBisht.Project.UberProject.UberApp.DTO;
 
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.PaymentMethod;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
+import lombok.Data;
 import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
 
+@Data
 public class RideDTO {
 
     private Long id;
 
 
-    private Point pickUpLocation;
+    private PointDTO pickUpLocation;
 
 
-    private Point dropOffLocation;
+    private PointDTO dropOffLocation;
 
 
     private LocalDateTime createdTime;
