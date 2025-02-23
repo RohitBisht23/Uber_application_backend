@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 public interface RideService {
     RideEntity getRiderById(Long rideID);
 
-    void matchWithDriver(RideRequestDTO rideRequestDTO);
+
 
     RideEntity createNewRide(RideRequest rideRequest, Driver driver);
 

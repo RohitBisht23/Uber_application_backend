@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class RideStartDTO {
-    private String OTP;
+    private String otp;
 }

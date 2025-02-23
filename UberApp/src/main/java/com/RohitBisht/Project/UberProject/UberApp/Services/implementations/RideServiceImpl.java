@@ -33,10 +33,6 @@ public class RideServiceImpl implements RideService {
         return ride;
     }
 
-    @Override
-    public void matchWithDriver(RideRequestDTO rideRequestDTO) {
-        return ;
-    }
 
     @Override
     public RideEntity createNewRide(RideRequest rideRequest, Driver driver) {

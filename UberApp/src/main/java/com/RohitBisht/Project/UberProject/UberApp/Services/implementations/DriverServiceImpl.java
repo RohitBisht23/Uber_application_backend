@@ -60,7 +60,30 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public RideDTO cancelRide(Long rideId) {
-        return null;
+        RideEntity ride = rideService.getRiderById(rideId);
+
+        //Check if driver own the ride
+        Driver driver = getCurrentDriver();
+
+        if(!driver.equals(ride.getDriver())) {
+            throw new RuntimeException("Driver cannot start ride as he has not accepted earlier");
+        }
+
+        //Only cancel the ride when the status is confirmed
+        if(!ride.getRideStatus().equals(RideStatus.CONFIRMED)) {
+            throw new RuntimeException("You cannot cancel the ongoing ride, invalid status : "+ride.getRideStatus());
+
+        }
+
+        ride.setRideStatus(RideStatus.CANCELLED);
+        rideService.updateRideStatus(ride, RideStatus.CANCELLED);
+
+        //Mark driver as available
+        driver.setAvailable(true);
+        Driver savedDriver = driverRepository.save(driver);
+
+
+        return modelMapper.map(ride, RideDTO.class);
     }
 
     @Override
