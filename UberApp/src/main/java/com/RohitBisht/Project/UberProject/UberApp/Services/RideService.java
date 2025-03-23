@@ -1,24 +1,24 @@
 package com.RohitBisht.Project.UberProject.UberApp.Services;
 
-import com.RohitBisht.Project.UberProject.UberApp.DTO.RideRequestDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.RideEntity;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Ride;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Rider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 
 public interface RideService {
-    RideEntity getRiderById(Long rideID);
+    Ride getRiderById(Long rideID);
 
 
 
-    RideEntity createNewRide(RideRequest rideRequest, Driver driver);
+    Ride createNewRide(RideRequest rideRequest, Driver driver);
 
-    RideEntity updateRideStatus(RideEntity ride, RideStatus rideStatus);
+    Ride updateRideStatus(Ride ride, RideStatus rideStatus);
 
-    Page<RideEntity> getAllRideOfRider(Long riderId, PageRequest pageRequest);
+    Page<Ride> getAllRideOfRider(Rider rider, PageRequest pageRequest);
 
-    Page<RideEntity> getAllRideOfDriver(Long riderId, PageRequest pageRequest);
+    Page<Ride> getAllRideOfDriver(Driver rider, PageRequest pageRequest);
 }

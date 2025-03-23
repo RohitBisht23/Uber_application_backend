@@ -21,7 +21,7 @@ public class WalletTransaction {
     private TransactionMethods transactionMethods;
 
     @OneToOne
-    private RideEntity ride;
+    private Ride ride;
 
     public String TransactionId;
 

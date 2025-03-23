@@ -2,11 +2,10 @@ package com.RohitBisht.Project.UberProject.UberApp.Services.implementations;
 
 import com.RohitBisht.Project.UberProject.UberApp.DTO.DriverDTO;
 import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
-import com.RohitBisht.Project.UberProject.UberApp.DTO.RideStartDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.RideEntity;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Ride;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.DriverNotAvailableException;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.ResourceNotFoundException;
@@ -16,12 +15,12 @@ import com.RohitBisht.Project.UberProject.UberApp.Services.RideRequestService;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RideService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -54,13 +53,13 @@ public class DriverServiceImpl implements DriverService {
         Driver savedDriver = driverRepository.save(currentDriver);
 
         //Create new Ride
-        RideEntity ride =  rideService.createNewRide(rideRequest, savedDriver);
+        Ride ride =  rideService.createNewRide(rideRequest, savedDriver);
         return modelMapper.map(ride, RideDTO.class);
     }
 
     @Override
     public RideDTO cancelRide(Long rideId) {
-        RideEntity ride = rideService.getRiderById(rideId);
+        Ride ride = rideService.getRiderById(rideId);
 
         //Check if driver own the ride
         Driver driver = getCurrentDriver();
@@ -79,8 +78,7 @@ public class DriverServiceImpl implements DriverService {
         rideService.updateRideStatus(ride, RideStatus.CANCELLED);
 
         //Mark driver as available
-        driver.setAvailable(true);
-        Driver savedDriver = driverRepository.save(driver);
+        Driver savedDriver = updateDriverAvailability(driver, true);
 
 
         return modelMapper.map(ride, RideDTO.class);
@@ -89,7 +87,7 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public RideDTO startRide(Long rideId, String OTP) {
         //Get the ride
-        RideEntity ride = rideService.getRiderById(rideId);
+        Ride ride = rideService.getRiderById(rideId);
 
         //Check if this driver own this ride then only start the ride
         Driver driver = getCurrentDriver();
@@ -108,13 +106,13 @@ public class DriverServiceImpl implements DriverService {
             throw  new RuntimeException("OTP is not valid. OTP : "+OTP);
         }
         ride.setStartAt(LocalDateTime.now());  //set started ride time
-        RideEntity savedRide = rideService.updateRideStatus(ride, RideStatus.ONGOING);
+        Ride savedRide = rideService.updateRideStatus(ride, RideStatus.ONGOING);
         return modelMapper.map(savedRide, RideDTO.class);
     }
 
     @Override
     public RideDTO endRide(Long rideId) {
-        return null;
+
     }
 
     @Override
@@ -124,16 +122,29 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public DriverDTO getMyProfile() {
-        return null;
+        Driver currentDriver = getCurrentDriver();
+        return modelMapper.map(currentDriver, DriverDTO.class);
     }
 
     @Override
-    public List<RideDTO> getAllMyRides() {
-        return List.of();
+    public Page<RideDTO> getAllMyRides(PageRequest pageRequest) {
+        //Get current driver
+        Driver currentDriver = getCurrentDriver();
+        return rideService.getAllRideOfDriver(currentDriver, pageRequest)
+                .map(
+                        ride -> modelMapper.map(ride, RideDTO.class)
+                );
     }
 
     @Override
     public Driver getCurrentDriver() {
         return driverRepository.findById(2L).orElseThrow(() -> new ResourceNotFoundException("Driver not found with id :"+2));
+    }
+
+    @Override
+    public Driver updateDriverAvailability(Driver driver, boolean availability) {
+        driver.setAvailable(availability);
+        Driver SavedDriver = driverRepository.save(driver);
+        return SavedDriver;
     }
 }

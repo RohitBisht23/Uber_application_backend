@@ -18,7 +18,7 @@ public class Payment {
     private PaymentMethod paymentMethod;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private RideEntity ride;
+    private Ride ride;
 
     private  Double amount;
 

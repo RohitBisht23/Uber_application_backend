@@ -1,11 +1,11 @@
 package com.RohitBisht.Project.UberProject.UberApp.Services.implementations;
 
-import com.RohitBisht.Project.UberProject.UberApp.DTO.RideRequestDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
-import com.RohitBisht.Project.UberProject.UberApp.Entity.RideEntity;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Ride;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.RideRequest;
+import com.RohitBisht.Project.UberProject.UberApp.Entity.Rider;
 import com.RohitBisht.Project.UberProject.UberApp.Exceptions.ResourceNotFoundException;
 import com.RohitBisht.Project.UberProject.UberApp.Repository.RideRepository;
 import com.RohitBisht.Project.UberProject.UberApp.Services.RideRequestService;
@@ -27,18 +27,18 @@ public class RideServiceImpl implements RideService {
     private final ModelMapper modelMapper;
 
     @Override
-    public RideEntity getRiderById(Long rideID) {
-        RideEntity ride = rideRepository.findById(rideID)
+    public Ride getRiderById(Long rideID) {
+        Ride ride = rideRepository.findById(rideID)
                 .orElseThrow(()-> new ResourceNotFoundException("Ride does not exist with id :"+rideID));
         return ride;
     }
 
 
     @Override
-    public RideEntity createNewRide(RideRequest rideRequest, Driver driver) {
+    public Ride createNewRide(RideRequest rideRequest, Driver driver) {
         rideRequest.setRideRequestStatus(RideRequestStatus.CONFIRMED);
 
-        RideEntity ride = modelMapper.map(rideRequest, RideEntity.class);
+        Ride ride = modelMapper.map(rideRequest, Ride.class);
         ride.setRideStatus(RideStatus.CONFIRMED);
         ride.setDriver(driver);
         ride.setOtp(generateRandomORP());
@@ -49,20 +49,20 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-    public RideEntity updateRideStatus(RideEntity ride, RideStatus rideStatus) {
+    public Ride updateRideStatus(Ride ride, RideStatus rideStatus) {
         ride.setRideStatus(rideStatus);
-        RideEntity savedRide = rideRepository.save(ride);
+        Ride savedRide = rideRepository.save(ride);
         return savedRide;
     }
 
     @Override
-    public Page<RideEntity> getAllRideOfRider(Long riderId, PageRequest pageRequest) {
-        return null;
+    public Page<Ride> getAllRideOfRider(Rider rider, PageRequest pageRequest) {
+        return rideRepository.findByRider(rider, pageRequest);
     }
 
     @Override
-    public Page<RideEntity> getAllRideOfDriver(Long riderId, PageRequest pageRequest) {
-        return null;
+    public Page<Ride> getAllRideOfDriver(Driver driver, PageRequest pageRequest) {
+        return rideRepository.findByDriver(driver, pageRequest);
     }
 
 
