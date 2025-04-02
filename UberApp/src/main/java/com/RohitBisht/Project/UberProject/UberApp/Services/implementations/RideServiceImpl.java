@@ -1,5 +1,6 @@
 package com.RohitBisht.Project.UberProject.UberApp.Services.implementations;
 
+import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideRequestStatus;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
@@ -27,10 +28,10 @@ public class RideServiceImpl implements RideService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Ride getRiderById(Long rideID) {
+    public RideDTO getRiderById(Long rideID) {
         Ride ride = rideRepository.findById(rideID)
                 .orElseThrow(()-> new ResourceNotFoundException("Ride does not exist with id :"+rideID));
-        return ride;
+        return modelMapper.map(ride, RideDTO.class);
     }
 
 

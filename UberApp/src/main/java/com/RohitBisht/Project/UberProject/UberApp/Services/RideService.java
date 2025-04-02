@@ -1,5 +1,6 @@
 package com.RohitBisht.Project.UberProject.UberApp.Services;
 
+import com.RohitBisht.Project.UberProject.UberApp.DTO.RideDTO;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Driver;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Enums.RideStatus;
 import com.RohitBisht.Project.UberProject.UberApp.Entity.Ride;
@@ -10,9 +11,7 @@ import org.springframework.data.domain.PageRequest;
 
 
 public interface RideService {
-    Ride getRiderById(Long rideID);
-
-
+    RideDTO getRiderById(Long rideID);
 
     Ride createNewRide(RideRequest rideRequest, Driver driver);
 
